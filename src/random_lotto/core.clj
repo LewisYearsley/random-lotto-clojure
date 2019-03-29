@@ -6,12 +6,18 @@
   [collection value]
     (some #(= value %) collection))
 
+(defn stringify
+  "Turns the generated numbers into a friendly string"
+  [collection]
+    (apply str 
+      (map #(str " " %) collection)))
+
 (defn generate-numbers
   "Generates the random collection of numbers"
   [generated]    
   (let [max 59]
     (if (= (count generated) 6)
-      (sort generated)
+      (stringify (sort generated))
       ;given that this is tail recursion it shouldn't overflow the stack      
       (generate-numbers 
         (let [num (+ 1 (rand-int max))]          
